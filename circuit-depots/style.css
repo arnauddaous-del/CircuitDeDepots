@@ -162,7 +162,17 @@ textarea { font-family: var(--mono); font-size: 0.88rem; resize: vertical; }
 .banner { border-radius: var(--radius); padding: 10px 12px; font-size: 0.92rem; border: 1px solid var(--warn); color: var(--warn); background: var(--surface); }
 .banner.info { border-color: var(--line); color: var(--muted); }
 
+/* Correction d'un dépôt */
+.edit .fl { width: 100%; font-size: 0.85rem; font-weight: 600; margin-top: 4px; }
+.edit input { flex: 1 1 100%; }
+.edit .hint { width: 100%; }
+.stop .acts .mini { text-align: center; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; }
+.check.off { opacity: 0.5; }
+
 /* Circuit */
+.plan { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+.plan canvas { display: block; width: 100%; }
+.next .res { display: block; font-size: 0.88rem; font-weight: 500; opacity: 0.8; }
 .total { display: flex; gap: 16px; flex-wrap: wrap; align-items: baseline; margin: 4px 0 0; font-variant-numeric: tabular-nums; }
 .total strong { font-size: 1.6rem; letter-spacing: -0.02em; }
 .leg { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px; display: flex; flex-direction: column; gap: 10px; }
@@ -181,6 +191,7 @@ textarea { font-family: var(--mono); font-size: 0.88rem; resize: vertical; }
 .next .addr { font-size: 1.1rem; font-weight: 700; overflow-wrap: anywhere; }
 .next .btn { background: rgba(255, 255, 255, 0.92); color: #101828; border-color: transparent; }
 .next .btn.dark { background: #0f1b2d; color: #fff; }
+.next .btn { flex: 1 1 140px; }
 .section-title { margin: 8px 0 0; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
 
 #toast {

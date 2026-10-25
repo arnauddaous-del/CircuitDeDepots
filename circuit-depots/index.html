@@ -32,7 +32,7 @@
       <video id="video" playsinline muted></video>
       <div class="frame" id="frame" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
       <div class="camera-idle" id="camera-idle">
-        <p>Scannez les QR codes les uns après les autres. Chaque code est ajouté à la liste sans quitter l’écran.</p>
+        <p>Scannez les QR codes des dépôts du jour, les uns après les autres. Chaque code est ajouté à la liste sans quitter l’écran.</p>
       </div>
     </div>
     <div class="row">
@@ -53,11 +53,22 @@
   <section id="view-stops" hidden aria-labelledby="tab-stops">
     <div class="banner" id="geo-banner" hidden></div>
     <ol class="stops" id="stops-list"></ol>
-    <p class="empty" id="stops-empty">La liste est vide. Scannez un QR code pour commencer.</p>
+    <p class="empty" id="stops-empty">La liste du jour est vide. Scannez un QR code pour commencer.</p>
+    <input id="file-table" type="file" accept=".csv,.txt,.tsv,text/csv,text/plain" hidden>
     <div class="row">
       <button class="btn" id="btn-retry" hidden>Relancer la recherche d’adresses</button>
-      <button class="btn danger" id="btn-clear" hidden>Tout effacer</button>
+      <button class="btn danger" id="btn-clear" hidden>Nouvelle tournée</button>
     </div>
+
+    <details class="table" id="memo-box">
+      <summary>Dépôts en mémoire</summary>
+      <p class="hint" id="memo-info"></p>
+      <p class="hint">Chaque dépôt scanné garde sa position, y compris vos corrections. Vous pouvez aussi importer d’un coup le fichier CSV exporté par le créateur de QR codes (noms et points GPS).</p>
+      <div class="row">
+        <label class="btn file" for="file-table">Importer le fichier des dépôts</label>
+        <button class="btn danger" id="btn-forget">Oublier les positions mémorisées</button>
+      </div>
+    </details>
 
     <details class="table">
       <summary>Table code → adresse <span id="table-count" class="muted"></span></summary>
@@ -65,7 +76,7 @@
       <textarea id="table-text" rows="5" placeholder="DEP-001 ; 12 rue Port-Neuf, 64100 Bayonne&#10;DEP-002 ; 3 avenue Foch, 64200 Biarritz"></textarea>
       <div class="row">
         <button class="btn" id="btn-table-save">Enregistrer la table</button>
-        <label class="btn file">Importer un fichier<input id="file-table" type="file" accept=".csv,.txt,.tsv,text/csv,text/plain" hidden></label>
+        <label class="btn file" for="file-table">Importer un fichier</label>
         <button class="btn" id="btn-table-clear">Vider</button>
       </div>
     </details>
@@ -84,6 +95,7 @@
       </div>
       <div class="opt">
         <label class="check"><input type="checkbox" id="opt-pos" checked> Partir de ma position</label>
+        <label class="check" id="opt-back-wrap"><input type="checkbox" id="opt-back"> Revenir à mon point de départ à la fin</label>
       </div>
       <button class="btn primary wide" id="btn-compute">Calculer le circuit le plus rapide</button>
       <p class="hint" id="compute-note"></p>
