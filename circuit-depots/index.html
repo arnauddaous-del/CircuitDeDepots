@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b3d91">
+<meta name="color-scheme" content="light dark">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Circuit Dépôts">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>Circuit Dépôts</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <h1>Circuit Dépôts</h1>
+  <p class="sub" id="summary">Aucun dépôt scanné</p>
+</header>
+
+<nav class="tabs" role="tablist" aria-label="Sections">
+  <button role="tab" id="tab-scan" data-view="scan" aria-selected="true">Scanner</button>
+  <button role="tab" id="tab-stops" data-view="stops" aria-selected="false">Dépôts <span class="count" id="count-stops">0</span></button>
+  <button role="tab" id="tab-route" data-view="route" aria-selected="false">Circuit</button>
+</nav>
+
+<main>
+  <section id="view-scan" aria-labelledby="tab-scan">
+    <div class="camera" id="camera">
+      <video id="video" playsinline muted></video>
+      <div class="frame" id="frame" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      <div class="camera-idle" id="camera-idle">
+        <p>Scannez les QR codes les uns après les autres. Chaque code est ajouté à la liste sans quitter l’écran.</p>
+      </div>
+    </div>
+    <div class="row">
+      <button class="btn primary grow" id="btn-scan">Démarrer la caméra</button>
+      <button class="btn" id="btn-torch" hidden aria-pressed="false">Lampe</button>
+    </div>
+    <p class="last" id="last-scan" aria-live="polite">Dernier scan : aucun</p>
+
+    <form class="add" id="form-add" autocomplete="off">
+      <label for="in-address">Ajouter une adresse à la main</label>
+      <div class="row">
+        <input id="in-address" type="text" inputmode="text" placeholder="12 rue Port-Neuf, 64100 Bayonne" enterkeyhint="done">
+        <button class="btn" type="submit">Ajouter</button>
+      </div>
+    </form>
+  </section>
+
+  <section id="view-stops" hidden aria-labelledby="tab-stops">
+    <div class="banner" id="geo-banner" hidden></div>
+    <ol class="stops" id="stops-list"></ol>
+    <p class="empty" id="stops-empty">La liste est vide. Scannez un QR code pour commencer.</p>
+    <div class="row">
+      <button class="btn" id="btn-retry" hidden>Relancer la recherche d’adresses</button>
+      <button class="btn danger" id="btn-clear" hidden>Tout effacer</button>
+    </div>
+
+    <details class="table">
+      <summary>Table code → adresse <span id="table-count" class="muted"></span></summary>
+      <p class="hint">Si vos QR codes contiennent un identifiant et non l’adresse, collez ici une ligne par dépôt : <code>code ; adresse</code></p>
+      <textarea id="table-text" rows="5" placeholder="DEP-001 ; 12 rue Port-Neuf, 64100 Bayonne&#10;DEP-002 ; 3 avenue Foch, 64200 Biarritz"></textarea>
+      <div class="row">
+        <button class="btn" id="btn-table-save">Enregistrer la table</button>
+        <label class="btn file">Importer un fichier<input id="file-table" type="file" accept=".csv,.txt,.tsv,text/csv,text/plain" hidden></label>
+        <button class="btn" id="btn-table-clear">Vider</button>
+      </div>
+    </details>
+  </section>
+
+  <section id="view-route" hidden aria-labelledby="tab-route">
+    <div class="panel">
+      <div class="opt">
+        <label for="opt-size">Dépôts par tronçon</label>
+        <select id="opt-size">
+          <option value="10" selected>10 (limite Google Maps)</option>
+          <option value="8">8</option>
+          <option value="6">6</option>
+          <option value="4">4</option>
+        </select>
+      </div>
+      <div class="opt">
+        <label class="check"><input type="checkbox" id="opt-pos" checked> Partir de ma position</label>
+      </div>
+      <button class="btn primary wide" id="btn-compute">Calculer le circuit le plus rapide</button>
+      <p class="hint" id="compute-note"></p>
+    </div>
+
+    <div class="banner" id="route-banner" hidden></div>
+    <div id="route-out"></div>
+  </section>
+</main>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script src="jsQR.js"></script>
+<script src="lib.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
