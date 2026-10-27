@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b3d91">
+<meta name="color-scheme" content="light dark">
+<title>Circuit de Dépôts</title>
+<style>
+:root{--bg:#f2f4f8;--surface:#fff;--ink:#0f1b2d;--muted:#566882;--line:#d9e0ea;--accent:#0b3d91;color-scheme:light}
+@media (prefers-color-scheme:dark){:root{--bg:#0b1420;--surface:#132033;--ink:#e8eef7;--muted:#9db0c9;--line:#243650;--accent:#8db8ff;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  padding:calc(24px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) 32px max(16px,env(safe-area-inset-left,0px))}
+main{max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+h1{margin:0;font-size:1.5rem}
+p{margin:0;color:var(--muted)}
+a.app{display:grid;grid-template-columns:56px 1fr;gap:14px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;color:inherit;text-decoration:none}
+a.app:hover{border-color:var(--accent)}
+a.app:focus-visible{outline:3px solid #ffcc00;outline-offset:2px}
+a.app img{width:56px;height:56px;border-radius:12px}
+a.app b{display:block;font-size:1.05rem}
+a.app span{color:var(--muted);font-size:.92rem}
+</style>
+</head>
+<body>
+<main>
+  <h1>Circuit de Dépôts</h1>
+  <p>Deux applis à installer sur le téléphone : ouvrez-en une, puis « Sur l’écran d’accueil » (iPhone) ou « Installer l’application » (Android).</p>
+  <a class="app" href="qr-depots/"><img src="qr-depots/icon-192.png" alt=""><div><b>QR Dépôts</b><span>Créer, localiser et imprimer les QR codes des dépôts.</span></div></a>
+  <a class="app" href="circuit-depots/"><img src="circuit-depots/icon-192.png" alt=""><div><b>Circuit Dépôts</b><span>Flasher les dépôts du jour et suivre le circuit le plus rapide dans Google Maps.</span></div></a>
+</main>
+</body>
+</html>

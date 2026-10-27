@@ -450,7 +450,7 @@
   }
 
   return {
-    parseQR: parseQR, parseTable: parseTable, parseCarnet: parseCarnet, haversine: haversine,
+    parseQR: parseQR, parseTable: parseTable, parseCarnet: parseCarnet, splitCsv: splitCsv, haversine: haversine,
     estimateMatrices: estimateMatrices, normalizeOSRM: normalizeOSRM,
     solvePath: solvePath, solveOpenPath: solveOpenPath, splitLegs: splitLegs, legStats: legStats,
     gmapsLegUrl: gmapsLegUrl, gmapsPointUrl: gmapsPointUrl, appleUrl: appleUrl,

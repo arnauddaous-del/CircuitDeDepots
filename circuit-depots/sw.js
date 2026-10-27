@@ -1,5 +1,5 @@
 /* Cache de l'app pour un lancement instantané et hors ligne (les trajets et adresses demandent du réseau). */
-var CACHE = 'circuit-depots-v2';
+var CACHE = 'circuit-depots-v3';
 var FILES = ['./', './index.html', './style.css', './app.js', './lib.js', './jsQR.js',
   './manifest.webmanifest', './icon.svg', './icon-192.png', './icon-512.png'];
 
@@ -12,7 +12,7 @@ self.addEventListener('install', function (e) {
 
 self.addEventListener('activate', function (e) {
   e.waitUntil(caches.keys().then(function (keys) {
-    return Promise.all(keys.filter(function (k) { return k !== CACHE; }).map(function (k) { return caches.delete(k); }));
+    return Promise.all(keys.filter(function (k) { return k.indexOf('circuit-depots-') === 0 && k !== CACHE; }).map(function (k) { return caches.delete(k); }));
   }).then(function () { return self.clients.claim(); }));
 });
 

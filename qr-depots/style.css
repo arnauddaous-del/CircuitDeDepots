@@ -1,0 +1,200 @@
+/* Disposition : une colonne sur téléphone, deux colonnes de cartes sur ordinateur ; mêmes couleurs que Circuit Dépôts. */
+:root {
+  --bg: #f2f4f8;
+  --surface: #ffffff;
+  --ink: #0f1b2d;
+  --muted: #566882;
+  --line: #d9e0ea;
+  --accent: #0b3d91;
+  --on-accent: #ffffff;
+  --signal: #ffcc00;
+  --on-signal: #1a1400;
+  --ok: #12805c;
+  --warn: #a35a00;
+  --bad: #b42318;
+  --radius: 12px;
+  --font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0b1420;
+    --surface: #132033;
+    --ink: #e8eef7;
+    --muted: #9db0c9;
+    --line: #243650;
+    --accent: #8db8ff;
+    --on-accent: #07162e;
+    --signal: #ffd21f;
+    --on-signal: #1a1400;
+    --ok: #4cc79b;
+    --warn: #f0b052;
+    --bad: #ff8a7d;
+    color-scheme: dark;
+  }
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font: 16px/1.45 var(--font);
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  -webkit-text-size-adjust: 100%;
+}
+.app { max-width: 880px; margin-inline: auto; }
+[hidden] { display: none !important; }
+.vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+.top { padding-block: 14px 8px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+h1 { margin: 0; font-size: 1.35rem; letter-spacing: -0.01em; }
+.sub { margin: 2px 0 0; color: var(--muted); font-size: 0.9rem; font-variant-numeric: tabular-nums; }
+
+.tabs {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px;
+  background: var(--bg); padding-block: 6px 10px;
+}
+.tabs button {
+  appearance: none; border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+  font: inherit; font-weight: 600; padding: 10px 6px; border-radius: 10px; min-height: 44px; cursor: pointer;
+}
+.tabs button[aria-selected="true"] { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+.count {
+  display: inline-block; min-width: 1.6em; padding: 0 6px; margin-left: 4px; border-radius: 99px;
+  background: var(--signal); color: var(--on-signal); font-size: 0.8rem; line-height: 1.5; font-variant-numeric: tabular-nums;
+}
+
+section { display: flex; flex-direction: column; gap: 12px; }
+.row { display: flex; gap: 8px; flex-wrap: wrap; align-items: stretch; }
+.grow { flex: 1 1 auto; }
+.wide { width: 100%; }
+.hint { margin: 0; color: var(--muted); font-size: 0.88rem; }
+
+.btn {
+  appearance: none; border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+  font: inherit; font-weight: 600; padding: 11px 14px; min-height: 46px; border-radius: 10px; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center; text-align: center; text-decoration: none;
+}
+.btn:active { transform: translateY(1px); }
+.btn:disabled { opacity: 0.5; cursor: default; }
+.btn.primary { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+.btn.danger { color: var(--bad); }
+.btn.ghost { min-height: 40px; padding: 8px 12px; font-size: 0.9rem; }
+:focus-visible { outline: 3px solid var(--signal); outline-offset: 2px; }
+
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px; display: flex; flex-direction: column; gap: 12px; }
+.field label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.92rem; }
+input[type="text"], select, textarea {
+  font: inherit; color: var(--ink); background: var(--bg); border: 1px solid var(--line);
+  border-radius: 10px; padding: 11px 12px; min-height: 46px; width: 100%; min-width: 0;
+}
+textarea { resize: vertical; }
+.detect { margin: 6px 0 0; font-size: 0.88rem; color: var(--muted); min-height: 1.3em; }
+.detect b { color: var(--ink); }
+.detect.ok b { color: var(--ok); }
+.detect.warn { color: var(--warn); }
+.mono { font-family: var(--mono); font-size: 0.85em; }
+
+.opts summary { cursor: pointer; font-weight: 600; min-height: 32px; display: flex; align-items: center; }
+.seg { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; border: 0; margin: 0; padding: 0; }
+.seg label { position: relative; }
+.seg input { position: absolute; opacity: 0; inset: 0; }
+.seg span { display: block; text-align: center; border: 1px solid var(--line); border-radius: 10px; padding: 10px 6px; font-weight: 600; cursor: pointer; }
+.seg input:checked + span { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+.seg input:focus-visible + span { outline: 3px solid var(--signal); outline-offset: 2px; }
+
+.preview { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.qr { background: #fff; border-radius: 8px; line-height: 0; border: 1px solid var(--line); }
+.qr canvas { display: block; max-width: 100%; height: auto; }
+.payload { margin: 0; width: 100%; font-family: var(--mono); font-size: 0.78rem; color: var(--muted); word-break: break-all; text-align: center; }
+.qr-empty { width: 200px; max-width: 100%; aspect-ratio: 1; border: 2px dashed var(--line); border-radius: 8px; display: grid; place-items: center; padding: 16px; text-align: center; color: var(--muted); font-size: 0.88rem; }
+
+/* Cartes des dépôts */
+.cards { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr; gap: 10px; }
+@media (min-width: 700px) { .cards { grid-template-columns: 1fr 1fr; } }
+.card {
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px;
+  display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 12px; align-items: start;
+}
+.card .qr { width: 112px; }
+.card h3 { margin: 0; font-size: 1.02rem; overflow-wrap: anywhere; }
+.card .addr { margin: 2px 0 0; font-size: 0.88rem; color: var(--muted); overflow-wrap: anywhere; }
+.card .gps { margin: 2px 0 0; font-family: var(--mono); font-size: 0.78rem; color: var(--muted); }
+.chip { display: inline-block; font-size: 0.75rem; font-weight: 700; padding: 1px 8px; border-radius: 99px; margin-top: 6px; }
+.chip.ok { color: var(--ok); border: 1px solid var(--ok); }
+.chip.warn { color: var(--warn); border: 1px solid var(--warn); }
+.chip.bad { color: var(--bad); border: 1px solid var(--bad); }
+.acts { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 6px; }
+.mini {
+  appearance: none; border: 1px solid var(--line); background: transparent; color: var(--ink);
+  font: inherit; font-size: 0.85rem; font-weight: 600; padding: 6px 10px; min-height: 38px; border-radius: 8px; cursor: pointer;
+  display: inline-flex; align-items: center; text-decoration: none;
+}
+.mini.bad { color: var(--bad); }
+.check { display: inline-flex; align-items: center; gap: 8px; font-size: 0.85rem; font-weight: 600; min-height: 38px; margin-left: auto; cursor: pointer; }
+.check input { width: 20px; height: 20px; accent-color: var(--accent); }
+.edit { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 8px; border-top: 1px solid var(--line); padding-top: 10px; }
+.edit label { font-size: 0.85rem; font-weight: 600; }
+.empty { color: var(--muted); text-align: center; padding: 28px 8px; margin: 0; }
+.banner { border-radius: var(--radius); padding: 10px 12px; font-size: 0.92rem; border: 1px solid var(--warn); color: var(--warn); background: var(--surface); }
+
+/* Aperçu des pages A4 */
+.sheet { display: flex; flex-direction: column; gap: 16px; align-items: center; }
+.page {
+  background: #fff; color: #0b1220; width: 100%; max-width: 560px; aspect-ratio: 210 / 297;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25); padding: 4%; display: grid; gap: 2%;
+}
+.page.per-12 { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(4, minmax(0, 1fr)); }
+.page.per-6 { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(3, minmax(0, 1fr)); }
+.page.per-1 { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); padding: 12%; }
+.tag {
+  border: 1px dashed #aab3c2; border-radius: 6px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 1.5mm; padding: 4%; min-width: 0; min-height: 0; overflow: hidden; text-align: center;
+}
+/* Le QR code prend la hauteur laissée par le nom et l'adresse, sans jamais déborder. */
+.tag img { flex: 1 1 0; min-height: 0; width: 100%; max-width: 100%; object-fit: contain; }
+.tag b, .tag small { flex: 0 0 auto; max-width: 100%; }
+.tag b { font-size: clamp(7px, 1.9vw, 13px); line-height: 1.15; overflow-wrap: anywhere; }
+.tag small { font-size: clamp(6px, 1.4vw, 9.5px); color: #566882; line-height: 1.15; overflow-wrap: anywhere; font-family: var(--mono); }
+.page.per-1 .tag { border: 0; }
+.page.per-1 .tag b { font-size: clamp(14px, 4.5vw, 30px); }
+.page.per-1 .tag small { font-size: clamp(10px, 2.6vw, 16px); }
+
+#toast {
+  position: fixed; left: 50%; transform: translateX(-50%);
+  bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+  max-width: min(92vw, 520px); background: var(--ink); color: var(--bg);
+  padding: 10px 16px; border-radius: 99px; font-size: 0.92rem; font-weight: 600;
+  opacity: 0; pointer-events: none; transition: opacity 0.2s ease; z-index: 20; text-align: center;
+}
+#toast.show { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+/* Impression : seules les pages d'étiquettes sortent, au format A4. */
+@media print {
+  @page { size: A4 portrait; margin: 0; }
+  html, body { background: #fff !important; padding: 0 !important; margin: 0 !important; }
+  .top, .tabs, #view-new, #view-list, #view-print > :not(.sheet), #toast { display: none !important; }
+  #view-print { display: block !important; }
+  .app { max-width: none; }
+  .sheet { display: block; gap: 0; }
+  .page {
+    width: 210mm; height: 297mm; max-width: none; aspect-ratio: auto; box-shadow: none;
+    padding: 10mm; gap: 4mm; break-after: page; page-break-after: always;
+  }
+  .page:last-child { break-after: auto; page-break-after: auto; }
+  .page.per-1 { padding: 25mm; }
+  .tag b { font-size: 11pt; }
+  .tag small { font-size: 7.5pt; }
+  .page.per-6 .tag b { font-size: 15pt; }
+  .page.per-6 .tag small { font-size: 9pt; }
+  .page.per-1 .tag b { font-size: 30pt; }
+  .page.per-1 .tag small { font-size: 14pt; }
+}

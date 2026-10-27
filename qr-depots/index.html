@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b3d91">
+<meta name="color-scheme" content="light dark">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="QR Dépôts">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>QR Dépôts</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+<header class="top">
+  <div>
+    <h1>QR Dépôts</h1>
+    <p class="sub" id="summary">Aucun dépôt</p>
+  </div>
+  <a class="btn ghost" href="../circuit-depots/">Circuit Dépôts</a>
+</header>
+
+<nav class="tabs" role="tablist" aria-label="Sections">
+  <button role="tab" id="tab-new" data-view="new" aria-selected="true">Nouveau</button>
+  <button role="tab" id="tab-list" data-view="list" aria-selected="false">Dépôts <span class="count" id="count">0</span></button>
+  <button role="tab" id="tab-print" data-view="print" aria-selected="false">Imprimer</button>
+</nav>
+
+<main>
+  <!-- ============ NOUVEAU ============ -->
+  <section id="view-new" aria-labelledby="tab-new">
+    <form class="panel" id="form-new" autocomplete="off">
+      <div class="field">
+        <label for="in-name">Nom du dépôt</label>
+        <input id="in-name" type="text" placeholder="Ex. Bourgneuf" enterkeyhint="next">
+      </div>
+      <div class="field">
+        <label for="in-loc">Adresse, point GPS, Plus Code ou lien Maps</label>
+        <textarea id="in-loc" rows="2" spellcheck="false" placeholder="14 rue Jacques Laffitte, 64100 Bayonne"></textarea>
+        <p class="detect" id="detect" aria-live="polite"></p>
+      </div>
+      <div class="row">
+        <button class="btn" type="button" id="btn-locate" hidden>Localiser l’adresse</button>
+        <a class="btn" id="btn-check" target="_blank" rel="noopener" hidden>Vérifier sur Google Maps</a>
+      </div>
+      <div class="preview" id="preview"></div>
+      <div class="row">
+        <button class="btn primary grow" type="submit" id="btn-add" disabled>Ajouter le dépôt</button>
+        <button class="btn" type="button" id="btn-reset">Effacer</button>
+      </div>
+      <p class="hint">Le QR code contient le point GPS du dépôt quand il est connu : Circuit Dépôts le place alors sans aucune recherche. Pour un dépôt sans numéro de rue, le plus précis est de coller ses coordonnées (appui long sur l’entrée dans Google Maps).</p>
+    </form>
+
+    <details class="panel opts">
+      <summary>Format du QR code</summary>
+      <fieldset class="seg" id="fmt">
+        <legend class="vh">Format du QR code</legend>
+        <label><input type="radio" name="fmt" value="gmaps" checked><span>Google Maps</span></label>
+        <label><input type="radio" name="fmt" value="geo"><span>geo:</span></label>
+      </fieldset>
+      <p class="hint" id="fmt-hint"></p>
+    </details>
+  </section>
+
+  <!-- ============ DÉPÔTS ============ -->
+  <section id="view-list" hidden aria-labelledby="tab-list">
+    <div class="banner" id="list-banner" hidden></div>
+    <div class="row">
+      <button class="btn" id="btn-locate-all" hidden>Localiser les adresses</button>
+      <label class="btn" for="file-import">Importer un CSV</label>
+      <input id="file-import" type="file" accept=".csv,.txt,text/csv,text/plain" hidden>
+      <button class="btn" id="btn-export" hidden>Exporter le CSV</button>
+    </div>
+    <ul class="cards" id="cards"></ul>
+    <p class="empty" id="list-empty">Aucun dépôt. Créez-en un dans « Nouveau » ou importez le fichier CSV de vos dépôts.</p>
+    <div class="row">
+      <button class="btn danger" id="btn-wipe" hidden>Tout supprimer</button>
+    </div>
+  </section>
+
+  <!-- ============ IMPRIMER ============ -->
+  <section id="view-print" hidden aria-labelledby="tab-print">
+    <div class="panel">
+      <div class="field">
+        <label for="opt-per">Étiquettes par page A4</label>
+        <select id="opt-per">
+          <option value="12">12 par page (6 × 7 cm environ)</option>
+          <option value="6">6 par page (grand format)</option>
+          <option value="1">1 par page (affiche)</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="opt-which">Dépôts à imprimer</label>
+        <select id="opt-which">
+          <option value="all">Tous les dépôts</option>
+          <option value="checked">Seulement ceux cochés « À imprimer »</option>
+        </select>
+      </div>
+      <button class="btn primary wide" id="btn-print">Imprimer ou enregistrer en PDF</button>
+      <p class="hint">Dans la fenêtre d’impression, choisissez « Enregistrer en PDF » pour garder un fichier. Sur iPhone : Partager → Imprimer, puis écartez deux doigts sur l’aperçu pour obtenir le PDF.</p>
+    </div>
+    <p class="hint" id="print-info"></p>
+    <div id="sheet" class="sheet" aria-label="Aperçu des pages"></div>
+  </section>
+</main>
+</div>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script src="qrcode.js"></script>
+<script src="../circuit-depots/lib.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
